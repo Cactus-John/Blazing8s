@@ -53,7 +53,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="NewPage1.xaml">
+	  <Compile Update="Game.xaml.cs">
+	    <DependentUpon>Game.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Instructions.xaml.cs">
+	    <DependentUpon>Instructions.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Game.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Instructions.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

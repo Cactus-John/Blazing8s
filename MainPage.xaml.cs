@@ -2,28 +2,21 @@
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
 
 	public MainPage()
 	{
 		InitializeComponent();
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	private void OnButton1Clicked(object sender, EventArgs e)
 	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		Window newWindow = new Window(new Game());
+		Application.Current.OpenWindow(newWindow);
 	}
 
-	private void OnButtonClicked(object sender, EventArgs e)
+	private void OnButton2Clicked(object sender, EventArgs e)
 	{
-		Window newWindow = new Window(new NewPage1());
+		Window newWindow = new Window(new Instructions());
 		Application.Current.OpenWindow(newWindow);
 	}
 }
