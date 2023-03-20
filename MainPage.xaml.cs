@@ -20,5 +20,11 @@ public partial class MainPage : ContentPage
 
 		SemanticScreenReader.Announce(CounterBtn.Text);
 	}
+
+	private void OnButtonClicked(object sender, EventArgs e)
+	{
+		Window newWindow = new Window(new NewPage1());
+		Application.Current.OpenWindow(newWindow);
+	}
 }
 

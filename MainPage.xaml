@@ -35,6 +35,13 @@
                 Clicked="OnCounterClicked"
                 HorizontalOptions="Center" />
 
+            <Button 
+                x:Name="NewWindowButton"
+                Text="Click to open a new window"
+                SemanticProperties.Hint="Opens a new window"
+                Clicked="OnButtonClicked"
+                HorizontalOptions="Center" />
+
         </VerticalStackLayout>
     </ScrollView>
 
