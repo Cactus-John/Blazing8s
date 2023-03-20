@@ -5,8 +5,16 @@
              Title="Instructions">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Here are the instructions for the game of Blazing 8's."
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Label
+            Text="When it is your turn, discard a card from your hand with the same suit or number as the previous card.
+            Playing special cards allows you to skip other players, reverse the direction of play, and even swap hands with other players.
+            The first person to discard all their cards wins!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+            
     </VerticalStackLayout>
 </ContentPage>

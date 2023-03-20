@@ -3,18 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Blazing8s.Game"
              Title="Game">
-    <VerticalStackLayout>
+
+    <VerticalStackLayout Margin="20" Spacing="3">
+
         <Label 
             Text="Welcome to .NET MAUI!"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
+        <ImageButton Source="redcard1.png"
+                  x:Name="RedCard1"
+                  HeightRequest="100"
+                  WidthRequest="200"
+                  Clicked="OnImageButton1_Clicked"  />
+            
+        <ImageButton Source="redcard2.png"
+                  x:Name="RedCard2"
+                  HeightRequest="100"
+                  WidthRequest="200"
+                  Clicked="OnImageButton2_Clicked"  />
 
-    <Button 
-             x:Name="NewWindowButton"
-             Text="Click to open a new window"
-             SemanticProperties.Hint="Opens a new window"
-             HorizontalOptions="Center" />
-        
+        <ImageButton Source="redcard3.png"
+                  x:Name="RedCard3"
+                  HeightRequest="100"
+                  WidthRequest="200"
+                  Clicked="OnImageButton3_Clicked"  />
+
     </VerticalStackLayout>
+
 </ContentPage>
