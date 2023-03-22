@@ -8,13 +8,22 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="120" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="1" Orientation="Horizontal" VerticalOptions="End" HorizontalOptions="FillAndExpand">
-            <ImageButton Source="redcard1.png" x:Name="RedCard1" Clicked="OnImageButton1_Clicked"/>
-            <ImageButton Source="redcard2.png" x:Name="RedCard2" Clicked="OnImageButton2_Clicked"/>
-            <ImageButton Source="redcard3.png" x:Name="RedCard3" Clicked="OnImageButton3_Clicked"/>
-            <ImageButton Source="greencard1.png" x:Name="GreenCard1" Clicked="OnImageButton4_Clicked"/>
-            <ImageButton Source="greencard2.png" x:Name="GreenCard2" Clicked="OnImageButton5_Clicked"/>
-            <ImageButton Source="bluecard1.png" x:Name="BlueCard1" Clicked="OnImageButton6_Clicked"/>
+        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+            <ImageButton Aspect="Center" x:Name="myImageButton1" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonFirst_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton2" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonSecond_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton3" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonThird_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton4" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonForth_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton5" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonFifth_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton6" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonSixth_Clicked"/>
+        </StackLayout>
+
+        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
         </StackLayout>
     </Grid>
 </ContentPage>
