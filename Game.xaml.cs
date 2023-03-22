@@ -5,111 +5,158 @@ namespace Blazing8s;
 
 public partial class Game : ContentPage
 {
-
+    public class Card
+    {
+        public string Name { get; set; }
+        public string Image { get; set; }
+    }
     public Game()
 	{
 		InitializeComponent();
-;
-        string[] cards = { "redcard1.png", "redcard2.png", "redcard3.png", "greencard1.png", "greencard2.png", "bluecard1.png", "bluecard2.png" };
-        /* Random rand = new Random();
-        List<string> userCards = new List<string>();
 
-        while (userCards.Count < 4)
+        var cards = new List<Card>
         {
-            int index = rand.Next(cards.Length);
-            string card = cards[index];
-            if (!userCards.Contains(card))
-            {
-                userCards.Add(card);
-            }
-        } */
+            new Card { Name = "RedCard1", Image = "redcard1.png" },
+            new Card { Name = "RedCard2", Image = "redcard2.png" },
+            new Card { Name = "RedCard3", Image = "redcard2.png" },
+            new Card { Name = "GreenCard1", Image = "greencard1.png" },
+            new Card { Name = "GreenCard2", Image = "greencard2.png" },
+            new Card { Name = "GreenCard3", Image = "greencard3.png" },
+            new Card { Name = "BlueCard1", Image = "bluecard1.png" },
+            new Card { Name = "BlueCard2", Image = "bluecard2.png" },
+            new Card { Name = "BlueCard3", Image = "bluecard3.png" },
+            new Card { Name = "Skip", Image = "stop.png" },
+            new Card { Name = "Reverse", Image = "swapcard.png" },
+            new Card { Name = "Draw Two", Image = "add2card.png" },
+        };
+
+        var random = new Random();
+        var card = cards[random.Next(cards.Count)];
+
+        myImageButton1.Source = ImageSource.FromFile(card.Image);
+        myImageButton2.Source = ImageSource.FromFile(card.Image);
+        myImageButton3.Source = ImageSource.FromFile(card.Image);
+        myImageButton4.Source = ImageSource.FromFile(card.Image);
+        myImageButton5.Source = ImageSource.FromFile(card.Image);
+        myImageButton6.Source = ImageSource.FromFile(card.Image);
     }
 
-	private void OnImageButton1_Clicked(object sender, EventArgs e)
+
+    private void OnImageButtonFirst_Clicked(object sender, EventArgs e)
 	{
-        if (RedCard1.IsPressed == true)
+        if (myImageButton1.IsPressed == true)
         {
-            RedCard1.TranslateTo(650, -350, 500);
+            myImageButton1.TranslateTo(650, -350, 500);
+            myImageButton1 = null;
         }
     }
 
-    private void OnImageButton2_Clicked(object sender, EventArgs e)
+    private void OnImageButtonSecond_Clicked(object sender, EventArgs e)
     {
-        if (RedCard2.IsPressed == true)
+        if (myImageButton2.IsPressed == true)
         {
-            RedCard2.TranslateTo(570, -350, 500);
+            myImageButton2.TranslateTo(570, -350, 500);
+            myImageButton2 = null;
         }
     }
 
-    private void OnImageButton3_Clicked(object sender, EventArgs e)
+    private void OnImageButtonThird_Clicked(object sender, EventArgs e)
     {
-        if (RedCard3.IsPressed == true)
+        if (myImageButton3.IsPressed == true)
         {
-            RedCard3.TranslateTo(490, -350, 500);
+            myImageButton3.TranslateTo(490, -350, 500);
+            myImageButton3 = null;
         }
     }
 
-    private void OnImageButton4_Clicked(object sender, EventArgs e)
+    private void OnImageButtonForth_Clicked(object sender, EventArgs e)
     {
-        if (GreenCard1.IsPressed == true)
+        if (myImageButton4.IsPressed == true)
         {
-            GreenCard1.TranslateTo(410, -350, 500);
+            myImageButton4.TranslateTo(410, -350, 500);
+            myImageButton4 = null;
         }
     }
 
-    private void OnImageButton5_Clicked(object sender, EventArgs e)
+    private void OnImageButtonFifth_Clicked(object sender, EventArgs e)
     {
-        if (GreenCard2.IsPressed == true)
+        if (myImageButton5.IsPressed == true)
         {
-            GreenCard2.TranslateTo(330, -350, 500);
+            myImageButton5.TranslateTo(330, -350, 500);
+            myImageButton5 = null;
         }
     }
 
-    private void OnImageButton6_Clicked(object sender, EventArgs e)
+    private void OnImageButtonSixth_Clicked(object sender, EventArgs e)
     {
-        if (BlueCard1.IsPressed == true)
+        if (myImageButton6.IsPressed == true)
         {
-            BlueCard1.TranslateTo(250, -350, 500);
+            myImageButton6.TranslateTo(250, -350, 500);
+            myImageButton6 = null;
         }
-    }
+    } 
 
-    private void OnImageButton7_Clicked(object sender, EventArgs e)
+    /* private void OnImageButton7_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButton7.IsPressed == true)
+        {
+            myImageButton7.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButton8_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButton8.IsPressed == true)
+        {
+            myImageButton8.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButton9_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButton9.IsPressed == true)
+        {
+            myImageButton9.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButtonChangeColor_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButtonChangeColor.IsPressed == true)
+        {
+            myImageButtonChangeColor.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButtonStop_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButtonSkip.IsPressed == true)
+        {
+            myImageButtonSkip.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButtonDirection_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButtonDirection.IsPressed == true)
+        {
+            myImageButtonDirection.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButtonAdd2_Clicked(object sender, EventArgs e)
     {
-
+        if (myImageButtonAdd2.IsPressed == true)
+        {
+            myImageButtonAdd2.TranslateTo(250, -350, 500);
+        }
     }
 
     private void OnImageButtonAdd4_Clicked(object sender, EventArgs e)
     {
-
-    }
+        if (myImageButtonAdd4.IsPressed == true)
+        {
+            myImageButtonAdd4.TranslateTo(250, -350, 500);
+        }
+    }           */
 }
