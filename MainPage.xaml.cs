@@ -1,4 +1,6 @@
-﻿namespace Blazing8s;
+﻿using Microsoft.Maui.Layouts;
+
+namespace Blazing8s;
 
 public partial class MainPage : ContentPage
 {
@@ -6,7 +8,7 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-	}
+    }
 
 	private void OnButton1Clicked(object sender, EventArgs e)
 	{

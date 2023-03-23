@@ -9,21 +9,29 @@
             <RowDefinition Height="120" />
         </Grid.RowDefinitions>
         <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-            <ImageButton Aspect="Center" x:Name="myImageButton1" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonFirst_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton2" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonSecond_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton3" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonThird_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton4" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonForth_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton5" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonFifth_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton6" BorderColor="red" BorderWidth="5" Clicked="OnImageButtonSixth_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton1" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonFirst_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton2" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonSecond_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton3" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonThird_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton4" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonForth_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton5" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonFifth_Clicked"/>
+            <ImageButton Aspect="Center" x:Name="myImageButton6" BorderColor="White" BorderWidth="5" Clicked="OnImageButtonSixth_Clicked"/>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="red" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
         </StackLayout>
+
+            
+         <AbsoluteLayout>
+            <ImageButton 
+              Aspect="Center" Source="cardbot.png" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" BackgroundColor="White" 
+              CornerRadius="10" AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" AbsoluteLayout.LayoutFlags="PositionProportional"
+            />
+        </AbsoluteLayout>
     </Grid>
 </ContentPage>
