@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Blazing8s.Game"
-             Title="Game">
+             Title="Game"
+             BackgroundImageSource="blacktable.jpg">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -18,20 +19,22 @@
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
+            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
         </StackLayout>
 
-            
          <AbsoluteLayout>
             <ImageButton 
-              Aspect="Center" Source="cardbot.png" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" BackgroundColor="White" 
+              Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" BackgroundColor="White" 
               CornerRadius="10" AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" AbsoluteLayout.LayoutFlags="PositionProportional"
             />
         </AbsoluteLayout>
+        <Button BackgroundColor="Red" x:Name="DrawButton" WidthRequest ="150" HeightRequest="150" TranslationX ="-300" TranslationY="-50" Text = "Draw" Clicked = "OnDrawButton_Clicked"
+            
+        />
     </Grid>
 </ContentPage>
