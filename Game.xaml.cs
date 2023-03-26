@@ -3,12 +3,11 @@ using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
 using Microsoft.Maui.Layouts;
 using System;
 using System.Reflection.Metadata;
-using Windows.UI.ViewManagement;
 using System.Xml.Linq;
-using Windows.Networking.Vpn;
 using Microsoft.Maui.Platform;
 using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui;
+using Microsoft.Maui.Controls.Compatibility;
 
 namespace Blazing8s;
 
@@ -64,110 +63,46 @@ public partial class Game : ContentPage
         myImageButton4.Source = ImageSource.FromFile(cards[random.Next(cards.Count)].Image);
         myImageButton5.Source = ImageSource.FromFile(cards[random.Next(cards.Count)].Image);
         myImageButton6.Source = ImageSource.FromFile(cards[random.Next(cards.Count)].Image);
+
+        var stackLayout = new Microsoft.Maui.Controls.StackLayout();
+
+        foreach (var card in cards)
+        {
+            var imageButton = new Microsoft.Maui.Controls.ImageButton
+            {
+                Source = ImageSource.FromFile(card.Image),
+                WidthRequest = 100,
+                HeightRequest = 150
+            };
+
+            imageButton.Clicked += OnImageButton_Clicked;
+
+            stackLayout.Children.Add(imageButton);
+        }
     }
 
-    private void OnImageButtonFirst_Clicked(object sender, EventArgs e)
+    private void OnImageButton_Clicked(object sender, EventArgs e)
 	{
-        if (myImageButton1.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton1.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton1.Scale = f, 1.5, 1) }
-            };
+        var selectedCard = (Microsoft.Maui.Controls.ImageButton)sender;
 
-            animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: (d, b) =>
+        if (selectedCard.ToString() == myImageButtonThrowOnFirst.ToString())
+        {
+            if (selectedCard.IsPressed == true)
             {
-                myImageButton1.TranslateTo(300, -200, 100);
-            });
+                animation = new Animation
+                {
+                    { 0, 0.5, new Animation(f => selectedCard.Scale = f, 1, 1.5) },
+                    { 0.5, 1, new Animation(f => selectedCard.Scale = f, 1.5, 1) }
+                };
+
+                animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: (d, b) =>
+                {
+                    selectedCard.TranslateTo(300, -200, 100);
+                });
+            }
         }
     }
-
-    private void OnImageButtonSecond_Clicked(object sender, EventArgs e)
-    {
-        if (myImageButton2.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton2.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton2.Scale = f, 1.5, 1) }
-            };
-
-            animation.Commit(this, "ImageButtonAnimation", length: 600, easing: Easing.SinIn, finished: (d, b) =>
-            {
-                myImageButton2.TranslateTo(300, -200, 100);
-            });
-        }
-    }
-
-    private void OnImageButtonThird_Clicked(object sender, EventArgs e)
-    {
-        if (myImageButton3.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton3.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton3.Scale = f, 1.5, 1) }
-            };
-
-            animation.Commit(this, "ImageButtonAnimation", length: 900, easing: Easing.BounceIn, finished: (d, b) =>
-            {
-                myImageButton3.TranslateTo(300, -200, 100);
-            });
-        }
-    }
-
-    private void OnImageButtonForth_Clicked(object sender, EventArgs e)
-    {
-        if (myImageButton4.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton4.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton4.Scale = f, 1.5, 1) }
-            };
-
-            animation.Commit(this, "ImageButtonAnimation", length: 800, easing: Easing.BounceOut, finished: (d, b) =>
-            {
-                myImageButton4.TranslateTo(300, -200, 100);
-            });
-        }
-    }
-
-    private void OnImageButtonFifth_Clicked(object sender, EventArgs e)
-    {
-        if (myImageButton5.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton5.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton5.Scale = f, 1.5, 1) }
-            };
-
-            animation.Commit(this, "ImageButtonAnimation", length: 900, easing: Easing.CubicIn, finished: (d, b) =>
-            {
-                myImageButton5.TranslateTo(300, -200, 100);
-            });
-        }
-    }
-
-    private void OnImageButtonSixth_Clicked(object sender, EventArgs e)
-    {
-        if (myImageButton6.IsPressed == true)
-        {
-            animation = new Animation
-            {
-                { 0, 0.5, new Animation(f => myImageButton6.Scale = f, 1, 1.5) },
-                { 0.5, 1, new Animation(f => myImageButton6.Scale = f, 1.5, 1) }
-            };
-
-            animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.CubicInOut, finished: (d, b) =>
-            {
-                myImageButton6.TranslateTo(300, -200, 100);
-            });
-        }
-    } 
-
+    
     private void OnDrawButton_Clicked(object sender, EventArgs e)
     {
         XDocument doc = XDocument.Load("W:\\Projects\\Ivan\\VS\\Blazing8s\\Game.xaml");
