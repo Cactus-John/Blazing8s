@@ -1,44 +1,39 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Blazing8s.Game"
-             Title="Game"
-             BackgroundImageSource="blacktable.jpg">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="120" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="150" />
-        </Grid.ColumnDefinitions>
-        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-            <ImageButton Aspect="Center" x:Name="myImageButton1" BorderColor="White" BorderWidth="5" Grid.Row="0" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton2" BorderColor="White" BorderWidth="5" Grid.Row="1" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton3" BorderColor="White" BorderWidth="5" Grid.Row="2" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton4" BorderColor="White" BorderWidth="5" Grid.Row="3" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton5" BorderColor="White" BorderWidth="5" Grid.Row="4" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-            <ImageButton Aspect="Center" x:Name="myImageButton6" BorderColor="White" BorderWidth="5" Grid.Row="5" Grid.Column="0" Clicked="OnImageButton_Clicked"/>
-        </StackLayout>
-
-        <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-            <ImageButton Aspect="Center" BackgroundColor="red" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-            <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5"/>
-        </StackLayout>
-
-         <AbsoluteLayout>
-            <ImageButton  
-		      Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" BackgroundColor="White" 
-              CornerRadius="10" AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" AbsoluteLayout.LayoutFlags="PositionProportional"
-            />
-        </AbsoluteLayout>
-        <Button BackgroundColor="Red" x:Name="DrawButton" WidthRequest ="150" HeightRequest="150" TranslationX ="-300" TranslationY="-50" Text = "Draw" Clicked = "OnDrawButton_Clicked"
-            
-        />
-    </Grid>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:converters="clr-namespace:Blazing8s.Converters;assembly=Blazing8s" 
+             x:Class="Blazing8s.Game" Title="Game" BackgroundImageSource="blacktable.jpg">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="120" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="150" />
+    </Grid.ColumnDefinitions>
+    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
+      <ImageButton Aspect="Center" x:Name="myImageButton1" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="0" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+      <ImageButton Aspect="Center" x:Name="myImageButton2" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="1" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+      <ImageButton Aspect="Center" x:Name="myImageButton3" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="2" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+      <ImageButton Aspect="Center" x:Name="myImageButton4" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="3" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+      <ImageButton Aspect="Center" x:Name="myImageButton5" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="4" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+      <ImageButton Aspect="Center" x:Name="myImageButton6" BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" BorderColor="White" Grid.Row="5" Grid.Column="0" Clicked="OnImageButton_Clicked" />
+    </StackLayout>
+    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand">
+      <ImageButton Aspect="Center" BackgroundColor="red" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+      <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+      <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+      <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+      <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+      <ImageButton Aspect="Center" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
+    </StackLayout>
+    <AbsoluteLayout>
+      <ImageButton 
+          Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" CornerRadius="10" 
+          AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" AbsoluteLayout.LayoutFlags="PositionProportional" 
+          BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" />
+    </AbsoluteLayout>
+    <Button BackgroundColor="Red" x:Name="DrawButton" WidthRequest="150" HeightRequest="150" TranslationX="-300" TranslationY="-50" Text="Draw" Clicked="OnDrawButton_Clicked" />
+  </Grid>
 </ContentPage>
