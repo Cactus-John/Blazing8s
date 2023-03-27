@@ -13,6 +13,7 @@ using System.Globalization;
 
 using ImageButton = Microsoft.Maui.Controls.ImageButton;
 using StackLayout = Microsoft.Maui.Controls.StackLayout;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Blazing8s;
 
@@ -56,6 +57,11 @@ public partial class Game : ContentPage
 
     }
 
+    public void Deck()
+    {
+
+    }
+
     public Game()
     {
 
@@ -95,16 +101,15 @@ public partial class Game : ContentPage
         myImageButton5.BindingContext = card6;
         myImageButton6.BindingContext = card7;
 
-        myImageButtonThrowOnFirst.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton1.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton2.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton3.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton4.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton5.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
-        myImageButton6.SetBinding(ImageButton.BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButtonThrowOnFirst.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton1.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton2.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton3.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton4.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton5.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
+        myImageButton6.SetBinding(BackgroundColorProperty, new Binding("Color", converter: new StringToColorConverter()));
 
         card1 = cards[random.Next(cards.Count)];
-
         myImageButtonThrowOnFirst.Source = ImageSource.FromFile(card1.Image);
         myImageButtonThrowOnFirst.BindingContext = card1;
 
@@ -153,7 +158,10 @@ public partial class Game : ContentPage
     {
         var selectedCard = (ImageButton)sender;
 
-        if (selectedCard.BackgroundColor == myImageButtonThrowOnFirst.BackgroundColor)
+        if  (selectedCard.BackgroundColor == myImageButtonThrowOnFirst.BackgroundColor 
+            || selectedCard.Source is FileImageSource imageSource1 && imageSource1.File == "stop.png" 
+            || selectedCard.Source is FileImageSource imageSource2 && imageSource2.File == "add2card.png" 
+            || selectedCard.Source is FileImageSource imageSource3 && imageSource3.File == "swapcard.png")
         {
             //else if (selectedCard.BackgroundColor != myImageButtonThrowOnFirst.BackgroundColor)
             // // ---> karta se baca samo jednom po potezu ---> stavit ovu provjeru u funkciju ---> dodat provjeru za "crnu boju" odnosno (stop, draw two...)
@@ -172,7 +180,7 @@ public partial class Game : ContentPage
 
                     selectedCard.TranslateTo(250, -370, 100);
 
-                    selectedCard = myImageButtonThrowOnFirst;
+                    selectedCard = this.myImageButtonThrowOnFirst;
 
                 });
             }
