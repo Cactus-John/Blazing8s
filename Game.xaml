@@ -30,7 +30,7 @@
     </StackLayout>
     <AbsoluteLayout>
       <ImageButton 
-          Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" CornerRadius="10" 
+          Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" BorderWidth="5" CornerRadius="10"
           AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" AbsoluteLayout.LayoutFlags="PositionProportional" 
           BackgroundColor="{Binding BindingContext.Color, Source={x:Reference Game}}" />
     </AbsoluteLayout>

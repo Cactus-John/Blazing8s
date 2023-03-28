@@ -10,10 +10,12 @@ using Microsoft.Maui.Controls.Shapes;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls.Compatibility;
 using System.Globalization;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 using ImageButton = Microsoft.Maui.Controls.ImageButton;
 using StackLayout = Microsoft.Maui.Controls.StackLayout;
-using Microsoft.UI.Xaml.Media.Imaging;
+using AbsoluteLayout = Microsoft.Maui.Controls.AbsoluteLayout;
+using System.Text.RegularExpressions;
 
 namespace Blazing8s;
 
@@ -23,45 +25,6 @@ public partial class Game : ContentPage
     public Random random = new();
     public Animation animation = new();
 
-    public class StringToColorConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is string colorString)
-            {
-                if (Color.TryParse(colorString, out Color color))
-                {
-                    return color;
-                }
-            }
-
-            return 0;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Card
-    {
-
-        public string Name { get; set; }
-
-        public string Color { get; set; }
-
-        public int Value { get; set; }
-
-        public string Image { get; set; }
-
-    }
-
-    public void Deck()
-    {
-
-    }
-
     public Game()
     {
 
@@ -69,21 +32,19 @@ public partial class Game : ContentPage
 
         var cards = new List<Card>
         {
-            new Card { Name = "RedCard1", Color = "red", Value = 1, Image = "redcard1.png" },              // 0
-            new Card { Name = "RedCard2", Color = "red", Value = 2, Image = "redcard2.png" },              // 1
-            new Card { Name = "RedCard3", Color = "red", Value = 3, Image = "redcard2.png" },              // 2
-            new Card { Name = "GreenCard1", Color = "green", Value = 1, Image = "greencard1.png" },        // 3
-            new Card { Name = "GreenCard2", Color = "green", Value = 2, Image = "greencard2.png" },        // 4
-            new Card { Name = "GreenCard3", Color = "green", Value = 3, Image = "greencard3.png" },        // 5
-            new Card { Name = "BlueCard1", Color = "blue", Value = 1, Image = "bluecard1.png" },           // 6
-            new Card { Name = "BlueCard2", Color = "blue", Value = 2, Image = "bluecard2.png" },           // 7
-            new Card { Name = "BlueCard3",Color = "blue", Value = 3, Image = "bluecard3.png" },            // 8
-            new Card { Name = "Skip", Color = "black", Image = "stop.png", Value = 0},                                      // 9
-            new Card { Name = "Reverse", Color = "black", Image = "swapcard.png", Value = 0 },                              // 10
-            new Card { Name = "Draw Two", Color = "black", Image = "add2card.png" , Value = 0},                             // 11
+            new Card { Name = "RedCard1", Color = "red", Value = 1, Image = "redcard1.png" },
+            new Card { Name = "RedCard2", Color = "red", Value = 2, Image = "redcard2.png" },
+            new Card { Name = "RedCard3", Color = "red", Value = 3, Image = "redcard2.png" },
+            new Card { Name = "GreenCard1", Color = "green", Value = 1, Image = "greencard1.png" },
+            new Card { Name = "GreenCard2", Color = "green", Value = 2, Image = "greencard2.png" },
+            new Card { Name = "GreenCard3", Color = "green", Value = 3, Image = "greencard3.png" },
+            new Card { Name = "BlueCard1", Color = "blue", Value = 1, Image = "bluecard1.png" },
+            new Card { Name = "BlueCard2", Color = "blue", Value = 2, Image = "bluecard2.png" },
+            new Card { Name = "BlueCard3",Color = "blue", Value = 3, Image = "bluecard3.png" },
+            new Card { Name = "Skip", Color = "black", Value = 0, Image = "stop.png" },
+            new Card { Name = "Reverse", Color = "black", Value = 0, Image = "swapcard.png" },
+            new Card { Name = "Draw Two", Color = "black", Value = 0, Image = "add2card.png" },
         };
-
-        // int rand = random.Next(cards.Count - 3);
 
         Card card1 = new();
         Card card2 = new();
@@ -135,7 +96,7 @@ public partial class Game : ContentPage
 
         card7 = cards[random.Next(cards.Count)];
         myImageButton6.Source = ImageSource.FromFile(card7.Image);
-        myImageButton6.BindingContext = card7; ;
+        myImageButton6.BindingContext = card7;
 
         var stackLayout = new StackLayout();
 
@@ -146,6 +107,7 @@ public partial class Game : ContentPage
                 Source = ImageSource.FromFile(card.Image),
                 WidthRequest = 100,
                 HeightRequest = 150
+
             };
 
             imageButton.Clicked += OnImageButton_Clicked;
@@ -158,15 +120,8 @@ public partial class Game : ContentPage
     {
         var selectedCard = (ImageButton)sender;
 
-        if  (selectedCard.BackgroundColor == myImageButtonThrowOnFirst.BackgroundColor 
-            || selectedCard.Source is FileImageSource imageSource1 && imageSource1.File == "stop.png" 
-            || selectedCard.Source is FileImageSource imageSource2 && imageSource2.File == "add2card.png" 
-            || selectedCard.Source is FileImageSource imageSource3 && imageSource3.File == "swapcard.png")
+        if (CheckIsLegal(selectedCard) == true)
         {
-            //else if (selectedCard.BackgroundColor != myImageButtonThrowOnFirst.BackgroundColor)
-            // // ---> karta se baca samo jednom po potezu ---> stavit ovu provjeru u funkciju ---> dodat provjeru za "crnu boju" odnosno (stop, draw two...)
-            // // ---> provjera za vrijednost karte (red 5 -> green 5, red 5 != green 6) 
-
             if (selectedCard.IsPressed == true)
             {
                 animation = new Animation
@@ -177,19 +132,96 @@ public partial class Game : ContentPage
 
                 animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: (d, b) =>
                 {
-
-                    selectedCard.TranslateTo(250, -370, 100);
-
-                    selectedCard = this.myImageButtonThrowOnFirst;
-
+                    selectedCard.TranslateTo(450, -150, 100);
                 });
-            }
-            /* 
-             else
-            {
 
-            } */
+                myImageButtonThrowOnFirst = selectedCard;
+            }
         }
+    }
+
+    public class StringToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string colorString)
+            {
+                if (Color.TryParse(colorString, out Color color))
+                {
+                    return color;
+                }
+            }
+
+            return 0;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private class Card
+    {
+
+        public string Name { get; set; }
+
+        public string Color { get; set; }
+
+        public int Value { get; set; }
+
+        public string Image { get; set; }
+
+    }
+
+    private bool CheckIsLegal(ImageButton selectedCard)
+    {
+        if (selectedCard.BackgroundColor == myImageButtonThrowOnFirst.BackgroundColor
+           || myImageButtonThrowOnFirst.Source is FileImageSource imageSource1 && imageSource1.File == "stop.png"
+           || myImageButtonThrowOnFirst.Source is FileImageSource imageSource2 && imageSource2.File == "add2card.png"
+           || myImageButtonThrowOnFirst.Source is FileImageSource imageSource3 && imageSource3.File == "swapcard.png"
+           || selectedCard.Source is FileImageSource imageSource4 && imageSource4.File == "stop.png"
+           || selectedCard.Source is FileImageSource imageSource5 && imageSource5.File == "add2card.png"
+           || selectedCard.Source is FileImageSource imageSource6 && imageSource6.File == "swapcard.png"
+           || (selectedCard.Source is FileImageSource imageSource7 && imageSource7.File == "redcard1.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource8 && imageSource8.File == "greencard1.png")     //red1 i green1 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource9 && imageSource9.File == "redcard1.png" &&
+              selectedCard.Source is FileImageSource imageSource10 && imageSource10.File == "greencard1.png")
+           || (selectedCard.Source is FileImageSource imageSource11 && imageSource11.File == "redcard2.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource12 && imageSource12.File == "greencard2.png")  // red2 i green2 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource13 && imageSource13.File == "redcard2.png" &&
+              selectedCard.Source is FileImageSource imageSource14 && imageSource14.File == "greencard2.png")
+           || (selectedCard.Source is FileImageSource imageSource15 && imageSource15.File == "redcard3.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource16 && imageSource16.File == "greencard3.png")  // red3 i green3 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource17 && imageSource17.File == "redcard3.png" &&
+              selectedCard.Source is FileImageSource imageSource18 && imageSource18.File == "greencard3.png")
+           || (selectedCard.Source is FileImageSource imageSource19 && imageSource19.File == "redcard1.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource20 && imageSource20.File == "bluecard1.png")  // red1 i blue1 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource21 && imageSource21.File == "redcard1.png" &&
+              selectedCard.Source is FileImageSource imageSource22 && imageSource22.File == "bluecard1.png")
+           || (selectedCard.Source is FileImageSource imageSource23 && imageSource23.File == "redcard2.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource24 && imageSource24.File == "bluecard2.png")  // red2 i blue2 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource25 && imageSource25.File == "redcard2.png" &&
+              selectedCard.Source is FileImageSource imageSource26 && imageSource26.File == "bluecard2.png")
+           || (selectedCard.Source is FileImageSource imageSource27 && imageSource27.File == "redcard3.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imageSource28 && imageSource28.File == "bluecard3.png")  // red3 i blue3 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imageSource29 && imageSource29.File == "redcard3.png" &&
+              selectedCard.Source is FileImageSource imageSource30 && imageSource30.File == "bluecard3.png")
+           || (selectedCard.Source is FileImageSource imagesource1 && imagesource1.File == "bluecard1.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imagesource2 && imagesource2.File == "greencard1.png")  // blue1 i green1 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imagesource3 && imagesource3.File == "bluecard1.png" &&
+              selectedCard.Source is FileImageSource imagesource4 && imagesource4.File == "greencard1.png")
+           || (selectedCard.Source is FileImageSource imagesource5 && imagesource5.File == "bluecard2.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imagesource6 && imagesource6.File == "greencard2.png")  // blue2 i green2 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imagesource7 && imagesource7.File == "bluecard2.png" &&
+              selectedCard.Source is FileImageSource imagesource8 && imagesource8.File == "greencard2.png")
+           || (selectedCard.Source is FileImageSource imagesource9 && imagesource9.File == "bluecard3.png" &&
+              myImageButtonThrowOnFirst.Source is FileImageSource imagesource10 && imagesource10.File == "greencard3.png")  // blue3 i green3 oba smjera
+           || (myImageButtonThrowOnFirst.Source is FileImageSource imagesource11 && imagesource11.File == "bluecard3.png" &&
+              selectedCard.Source is FileImageSource imagesource12 && imagesource12.File == "greencard3.png"))
+        { return true; }
+
+        return false;
     }
 
     private void OnDrawButton_Clicked(object sender, EventArgs e)
