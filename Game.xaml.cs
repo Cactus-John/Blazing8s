@@ -1,15 +1,16 @@
+using System;
 using System.Globalization;
 using System.IO;
 using Windows.Storage.Streams;
 using ImageButton = Microsoft.Maui.Controls.ImageButton;
 using StackLayout = Microsoft.Maui.Controls.StackLayout;
 
-
 namespace Blazing8s;
 
 public class Card
 {
     public string Name { get; set; }
+
     public string Color { get; set; }
 
     public int Value { get; set; }
@@ -22,18 +23,18 @@ public class Globals
 
     public static List<Card> cards = new()
     {
-            new Card { Name = "RedCard1", Color = "Red", Value = 1, Image = "redcard1.png" },
-            new Card { Name = "RedCard2", Color = "Red", Value = 2, Image = "redcard2.png" },
-            new Card { Name = "RedCard3", Color = "Red", Value = 3, Image = "redcard2.png" },
-            new Card { Name = "GreenCard1", Color = "Green", Value = 1, Image = "greencard1.png" },
-            new Card { Name = "GreenCard2", Color = "Green", Value = 2, Image = "greencard2.png" },
-            new Card { Name = "GreenCard3", Color = "Green", Value = 3, Image = "greencard3.png" },
-            new Card { Name = "BlueCard1", Color = "Blue", Value = 1, Image = "bluecard1.png" },
-            new Card { Name = "BlueCard2", Color = "Blue", Value = 2, Image = "bluecard2.png" },
-            new Card { Name = "BlueCard3",Color = "Blue", Value = 3, Image = "bluecard3.png" },
-            new Card { Name = "Skip", Color = "black", Value = 0, Image = "stop.png" },
-            new Card { Name = "Reverse", Color = "black", Value = 0, Image = "swapcard.png" },
-            new Card { Name = "Draw Two", Color = "black", Value = 0, Image = "add2card.png" },
+            new Card { Name = "redCard1", Color = "red", Value = 1, Image = "redcard1.png" },
+            new Card { Name = "redCard2", Color = "red", Value = 2, Image = "redcard2.png" },
+            new Card { Name = "redCard3", Color = "red", Value = 3, Image = "redcard2.png" },
+            new Card { Name = "greenCard1", Color = "green", Value = 1, Image = "greencard1.png" },
+            new Card { Name = "greenCard2", Color = "green", Value = 2, Image = "greencard2.png" },
+            new Card { Name = "greenCard3", Color = "green", Value = 3, Image = "greencard3.png" },
+            new Card { Name = "blueCard1", Color = "blue", Value = 1, Image = "bluecard1.png" },
+            new Card { Name = "blueCard2", Color = "blue", Value = 2, Image = "bluecard2.png" },
+            new Card { Name = "blueCard3",Color = "blue", Value = 3, Image = "bluecard3.png" },
+            new Card { Name = "skip", Color = "black", Value = 0, Image = "stop.png" },
+            new Card { Name = "reverse", Color = "black", Value = 0, Image = "swapcard.png" },
+            new Card { Name = "draw Two", Color = "black", Value = 0, Image = "add2card.png" },
     };
 
     public static Int32 CardCount = cards.Count;
@@ -42,6 +43,7 @@ public class Globals
     public static List<Card> PlayerCards = new List<Card>();
     public static List<Card> BotCards = new List<Card>();
     public static ImageButton card1 = new();
+    public static bool Black = false;
 }
 
 public partial class Game : ContentPage
@@ -77,47 +79,88 @@ public partial class Game : ContentPage
         Globals.Color = Globals.cards[temp].Color;
 
         var stackLayout = new StackLayout();
-        int turns = 0;
     }
 
     private bool CheckIsLegal(Card Card)
     {
         string temp = Card.Name;
-        if (temp[1] +"" == "s" || Convert.ToInt32(temp[temp.Length - 4]) == Globals.Value || temp[1] == Globals.Color[0] || temp[1] + "" == "a")
+        if (temp[1] + "" == "s" || temp[1] + "" == "a")
+        {
+            Globals.Black = true;
             return true;
+        }
+
+        if (temp[1] + "" == "s" || temp[temp.Length - 5] - '0' == Globals.Value || temp[1] == Globals.Color[0] || temp[1] + "" == "a")
+        {
+            Globals.Black = false;
+            return true;
+        }
         else
             return false;
     }
 
-    private void OnImageButton_Clicked(object sender, EventArgs e)
+    private async void OnImageButton_Clicked(object sender, EventArgs e)
     {
         var selectedCard = (ImageButton)sender;
-        bool Legal = false;
+        bool Legal;
         var temp = selectedCard.Source.ToString().Substring(5);
         Legal = CheckIsLegal(new Card { Name = temp, Color = "Card", Value = 1, Image = "Card" });
-        StackLayout layout3 = new();
 
         if (Legal)
         {
-            Globals.Value = temp[temp.Length - 4] - '0';
-            Globals.Color = temp[1] + "";
+            if (!Globals.Black)
+            {
+                Globals.Value = temp[temp.Length - 4] - '0';
+                Globals.Color = temp[1] + "";
+            }
+
             if (selectedCard.IsPressed == true)
             {
-                animation = new Animation
-                {
-                    { 0, 0.5, new Animation(f => selectedCard.Scale = f, 1, 1.5) },
-                    { 0.5, 1, new Animation(f => selectedCard.Scale = f, 1.5, 1) }
-                };
+                selectedCard.WidthRequest = 100;
+                selectedCard.HeightRequest = 150;
+                FlexLayout parent;
+                parent = layout3;
 
-                animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: (d, b) =>
-                {
-                    layout3.Children.Add(selectedCard);
-                    selectedCard.IsEnabled = false;
-
-                    layout3.Children.Remove(selectedCard);
-                });
+                _= selectedCard.TranslateTo(-parent.WidthRequest, -parent.HeightRequest);
+                //parent.Children.Add(selectedCard);
+                layout3.WidthRequest = -parent.WidthRequest;
+                layout3.HeightRequest = -parent.HeightRequest;
+                selectedCard.IsEnabled = false;
+                await Task.Delay(555);
+                if (!selectedCard.IsEnabled)
+                    parent.Children.Remove(selectedCard);
 
                 myImageButtonThrowOnFirst = selectedCard;
+            }
+
+            await Task.Delay(750);
+            StackLayout Botparent = layout2;
+            int i = 0;
+            foreach (var card in Globals.BotCards)// rucni for sa i lolo
+            {
+          
+                string Temp = card.Name;
+                if (Temp[1] + "" == "s" || Temp[1] + "" == "a")
+                {
+                    Globals.Black = true;
+                    //animacija
+                    //remove
+                    Botparent.Children.RemoveAt(0);
+                    return;
+                }
+
+                if (Temp[1] + "" == "s" || Temp[Temp.Length - 5] - '0' == Globals.Value || Temp[1] == Globals.Color[0] || Temp[1] + "" == "a")
+                {
+                    Globals.Black = false;
+                    Globals.Value = Temp[temp.Length - 4] - '0';
+                    Globals.Color = Temp[1] + "";
+                    Botparent.Children.RemoveAt(0);
+                    return;
+                }
+                Bot_Draw();
+                Globals.BotCards.RemoveAt(i);
+                i++;
+                await Task.Delay(750);
             }
         }
     }
@@ -149,5 +192,4 @@ public partial class Game : ContentPage
         int index = random.Next(0, Globals.CardCount);
         Globals.BotCards.Add(new Card { Name = Globals.cards[index].Name, Color = Globals.cards[index].Color, Value = Globals.cards[index].Value, Image = Globals.cards[index].Image });
     }
-
 }
