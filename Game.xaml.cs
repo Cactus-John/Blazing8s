@@ -11,20 +11,54 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls.Compatibility;
 using System.Globalization;
 using Microsoft.UI.Xaml.Media.Imaging;
-
 using ImageButton = Microsoft.Maui.Controls.ImageButton;
 using StackLayout = Microsoft.Maui.Controls.StackLayout;
 using AbsoluteLayout = Microsoft.Maui.Controls.AbsoluteLayout;
 using System.Text.RegularExpressions;
+using System.Net;
+using Windows.Data.Xml.Dom;
+using Windows.UI.WebUI;
+using System.Collections.Immutable;
 
 namespace Blazing8s;
+
+public class card
+{
+
+    public string Name { get; set; }
+
+    public string Color { get; set; }
+
+    public int Value { get; set; }
+
+    public string Image { get; set; }
+
+}
+public class Globals
+{
+    public static Int32 CardCount = 12; // Unmodifiable
+    public static List<card> cards = new List<card>
+        {
+            new card { Name = "RedCard1", Color = "red", Value = 1, Image = "redcard1.png" },
+            new card { Name = "RedCard2", Color = "red", Value = 2, Image = "redcard2.png" },
+            new card { Name = "RedCard3", Color = "red", Value = 3, Image = "redcard2.png" },
+            new card { Name = "GreenCard1", Color = "green", Value = 1, Image = "greencard1.png" },
+            new card { Name = "GreenCard2", Color = "green", Value = 2, Image = "greencard2.png" },
+            new card { Name = "GreenCard3", Color = "green", Value = 3, Image = "greencard3.png" },
+            new card { Name = "BlueCard1", Color = "blue", Value = 1, Image = "bluecard1.png" },
+            new card { Name = "BlueCard2", Color = "blue", Value = 2, Image = "bluecard2.png" },
+            new card { Name = "BlueCard3",Color = "blue", Value = 3, Image = "bluecard3.png" },
+            new card { Name = "Skip", Color = "black", Value = 0, Image = "stop.png" },
+            new card { Name = "Reverse", Color = "black", Value = 0, Image = "swapcard.png" },
+            new card { Name = "Draw Two", Color = "black", Value = 0, Image = "add2card.png" },
+        };
+}
 
 public partial class Game : ContentPage
 {
 
     public Random random = new();
     public Animation animation = new();
-
     public Game()
     {
 
@@ -46,12 +80,12 @@ public partial class Game : ContentPage
             new Card { Name = "Draw Two", Color = "black", Value = 0, Image = "add2card.png" },
         };
 
-        Card card1 = new();
-        Card card2 = new();
-        Card card3 = new();
-        Card card4 = new();
-        Card card5 = new();
-        Card card6 = new();
+        Card card1 = new(); Card card8 = new();
+        Card card2 = new(); Card card9 = new();
+        Card card3 = new(); Card card10 = new();
+        Card card4 = new(); Card card11 = new();
+        Card card5 = new(); Card card12 = new();
+        Card card6 = new(); Card card13 = new();
         Card card7 = new();
 
         myImageButtonThrowOnFirst.BindingContext = card1;
@@ -98,27 +132,92 @@ public partial class Game : ContentPage
         myImageButton6.Source = ImageSource.FromFile(card7.Image);
         myImageButton6.BindingContext = card7;
 
+        card8 = cards[random.Next(cards.Count)];
+        botImageButton1.Source = ImageSource.FromFile(card8.Image);
+        botImageButton1.BindingContext = card8;
+
+        card9 = cards[random.Next(cards.Count)];
+        botImageButton2.Source = ImageSource.FromFile(card9.Image);
+        botImageButton2.BindingContext = card9;
+
+        card10 = cards[random.Next(cards.Count)];
+        botImageButton3.Source = ImageSource.FromFile(card10.Image);
+        botImageButton3.BindingContext = card10;
+
+        card11 = cards[random.Next(cards.Count)];
+        botImageButton4.Source = ImageSource.FromFile(card11.Image);
+        botImageButton4.BindingContext = card11;
+
+        card12 = cards[random.Next(cards.Count)];
+        botImageButton5.Source = ImageSource.FromFile(card12.Image);
+        botImageButton5.BindingContext = card12;
+
+        card13 = cards[random.Next(cards.Count)];
+        botImageButton6.Source = ImageSource.FromFile(card13.Image);
+        botImageButton6.BindingContext = card13;
+
         var stackLayout = new StackLayout();
+        int turns = 0;
+        //bool anyCardsLeft = true;
 
-        foreach (var card in cards)
+        while (cards.Count > 0)
         {
-            var imageButton = new ImageButton
+            if (turns % 2 == 0)
             {
-                Source = ImageSource.FromFile(card.Image),
-                WidthRequest = 100,
-                HeightRequest = 150
+                foreach (var card in cards)
+                {
+                    var imageButton = new ImageButton
+                    {
+                        Source = ImageSource.FromFile(card.Image),
+                        WidthRequest = 100,
+                        HeightRequest = 150
+                    };
 
-            };
+                    // user turn
+                    if (CheckIsLegal(imageButton) == true)
+                    {
+                        imageButton.Clicked += OnImageButton_Clicked;
 
-            imageButton.Clicked += OnImageButton_Clicked;
+                        stackLayout.Children.Remove(imageButton);
+                        break;
+                    }
 
-            stackLayout.Children.Add(imageButton);
+                    turns++;
+                }
+            }
+
+
+            if (turns % 2 != 0)
+            {
+                foreach (var card in cards)
+                {
+                    var botImageButton = new ImageButton
+                    {
+                        Source = ImageSource.FromFile(card.Image),
+                        WidthRequest = 100,
+                        HeightRequest = 150
+                    };
+
+                    if (CheckIsLegal(botImageButton))
+                    {
+                        //await Task.Delay(2000);
+                        botImageButton.Clicked += OnImageButton_Clicked;
+                        stackLayout.Children.Remove(botImageButton);
+                        break;
+                    }
+                    // else if (!CheckIsLegal(botImageButton))
+                       // OnDrawButton_Clicked();
+                }
+            }
         }
     }
 
     private void OnImageButton_Clicked(object sender, EventArgs e)
     {
         var selectedCard = (ImageButton)sender;
+        var stackLayout = new StackLayout();
+        int X = 450;
+        int Y = -150;
 
         if (CheckIsLegal(selectedCard) == true)
         {
@@ -130,11 +229,19 @@ public partial class Game : ContentPage
                     { 0.5, 1, new Animation(f => selectedCard.Scale = f, 1.5, 1) }
                 };
 
-                animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: (d, b) =>
+                animation.Commit(this, "ImageButtonAnimation", length: 1000, easing: Easing.SinInOut, finished: async (d, b) =>
                 {
-                    selectedCard.TranslateTo(450, -150, 100);
+
+                    selectedCard.TranslateTo(X, Y, 150);
+                    selectedCard.IsEnabled = false;
+
+                    await Task.Delay(5000);
+                    selectedCard.IsVisible = false;
+
                 });
 
+                // X += 220;
+                //Y -= 220;
                 myImageButtonThrowOnFirst = selectedCard;
             }
         }
@@ -226,12 +333,14 @@ public partial class Game : ContentPage
 
     private void OnDrawButton_Clicked(object sender, EventArgs e)
     {
-        XmlDocument doc = new XmlDocument();
-        doc.Load("W:\\Projects\\Ivan\\VS\\Blazing8s\\Game.xaml");
-        XmlNode xmlNode = doc.SelectSingleNode("//StackLayout");
-        XmlElement ImageButton = doc.CreateElement("ImageButton");
-        xmlNode.InsertAfter(ImageButton, doc.GetElementsByTagName("StackLayout")[0]);
-        doc.Save("W:\\Projects\\Ivan\\VS\\Blazing8s\\Game.xaml");
+        StackLayout parent;
+        ImageButton newImageButton = new ImageButton();
+        newImageButton.Source = ImageSource.FromFile(Globals.cards[random.Next(0, Globals.CardCount)].Image);
+        newImageButton.WidthRequest = 100;
+        newImageButton.HeightRequest = 150;
+        newImageButton.Clicked += OnImageButton_Clicked;
+        parent = layout;
+        parent.Children.Add(newImageButton);
     }
 
 }
