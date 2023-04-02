@@ -33,8 +33,8 @@ public static class MauiProgram
                         p.Maximize();
                     else
                     {
-                        const int width = 1200;
-                        const int height = 800;
+                        const int width = 1920;
+                        const int height = 1080;
                         winuiAppWindow.MoveAndResize(new RectInt32(1920 / 2 - width / 2, 1080 / 2 - height / 2, width, height));
                     }
                 });

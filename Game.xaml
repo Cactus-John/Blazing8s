@@ -17,17 +17,11 @@
         </Grid.RowDefinitions>
 
         <FlexLayout Padding="10" x:Name="BotLayout0" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0">
-            <ImageButton AnchorX="338" AnchorY="-343" 
-                         HeightRequest="150" WidthRequest="100" 
-                         Margin="10" >
-            </ImageButton>
+            
         </FlexLayout>
 
         <FlexLayout x:Name="BotLayout1" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="0" Rotation="-90">
-            <ImageButton AnchorX="338" AnchorY="-343" 
-                         HeightRequest="150" WidthRequest="100" 
-                         Margin="10">
-            </ImageButton>
+
         </FlexLayout>
 
         <StackLayout x:Name="CenterLayout" AnchorX="500" AnchorY="-250" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Orientation="Horizontal" Padding="10" Grid.Row="1" Grid.Column="1">
@@ -42,10 +36,7 @@
         </StackLayout>
 
         <FlexLayout x:Name="BotLayout2" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="3" Rotation="-90" >
-            <ImageButton AnchorX="338" AnchorY="-343"
-                         HeightRequest="150" WidthRequest="100" 
-                         Margin="10">
-            </ImageButton>
+
         </FlexLayout>
 
         <FlexLayout x:Name="PlayerLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
