@@ -32,15 +32,15 @@
                          Margin="10" Clicked="OnDrawButton_Clicked">
             </ImageButton>
 
-            <Image x:Name="myImageButtonThrowOnFirst" AnchorX="338" AnchorY="-343" HeightRequest="150" WidthRequest="100" Margin="10"></Image>
+            <ImageButton x:Name="myImageButtonThrowOnFirst" AnchorX="338" AnchorY="-343" HeightRequest="150" WidthRequest="100" Margin="10"></ImageButton>
         </StackLayout>
 
         <FlexLayout x:Name="BotLayout2" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="3" Rotation="-90" >
 
         </FlexLayout>
-
-        <FlexLayout x:Name="PlayerLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
-
+        <FlexLayout x:Name="PlayerLayout" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" 
+                    Wrap="Wrap" Position="Relative" FlexLayout.Basis="100%" Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="1"
+                    AlignContent="Center" TranslationY="350">
         </FlexLayout>
     </Grid>
 </ContentPage>
