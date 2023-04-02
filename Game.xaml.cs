@@ -271,7 +271,7 @@ public partial class Game : ContentPage
             if (Globals.PlayerCards[i].Image == temp)
                 P = i;
         }
-
+ 
         if (selectedCard.IsPressed == true)
         {
 
