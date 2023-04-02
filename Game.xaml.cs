@@ -190,7 +190,7 @@ public partial class Game : ContentPage
 
                     if (CheckIsLegal(Globals.BotDecks[j][i].Image))
                     {
-                        //Botparent.Children.RemoveAt(0);   
+
                         Globals.Value = Temp[Temp.Length - 5] - '0';
                         Globals.Color = Temp + "";
                         ImageButton MyImageButtonThrowOnFirst = myImageButtonThrowOnFirst;
@@ -202,21 +202,23 @@ public partial class Game : ContentPage
                         newImageButton.HeightRequest = 150;
                         newImageButton.Margin = 3;
                         parent.Add(newImageButton);
+
                         await Task.Delay(750);
+
                         if (j == 2)
                         {
                             Bot3CardAnimation(newImageButton);
                             await Task.Delay(2500);
                             parent.Children.Remove(newImageButton);
                         }
-                        //await Task.Delay(530);
+
                         if (j == 0)
                         {
                             Bot2CardAnimation(newImageButton);
                             await Task.Delay(2500);
                             parent.Children.Remove(newImageButton);
                         }
-                       // await Task.Delay(530);
+
                         if (j == 1)
                         {
                             Bot1CardAnimation(newImageButton);
@@ -225,15 +227,12 @@ public partial class Game : ContentPage
                         }
 
                         myImageButtonThrowOnFirst.Source = ImageSource.FromFile(Globals.BotDecks[j][i].Image);
-
                         await Task.Delay(1500);
 
-
-                        //MyImageButtonThrowOnFirst.BackgroundColor = new Color(255, 255, 255);
                         Globals.BotDecks[j].RemoveAt(i);
                         break;
-
                     }
+
                     if (i == Globals.BotDecks[j].Count - 1)
                     {
                         if (j == 0)
@@ -245,12 +244,9 @@ public partial class Game : ContentPage
                         break;
                     }
 
-
                     await Task.Delay(800);
                 }
 
-
-                //Bot_Draw();
                 await Task.Delay(800);
                 Globals.PlayerTrun = true;
             }
@@ -259,12 +255,10 @@ public partial class Game : ContentPage
 
     private async void CardAnimation(ImageButton selectedCard)
     {
-
-        var centerLayout = new StackLayout();
         FlexLayout parent = PlayerLayout;
         List<int> x = new List<int>(new int[] { -0, -20, -40, -60, -80, -100 });
-        var imagePosition = new Point(centerLayout.X + myImageButtonThrowOnFirst.AnchorX, centerLayout.Y + myImageButtonThrowOnFirst.AnchorY);
         var P = 1;
+
         for(int i = 0; i < Globals.PlayerCards.Count; i++)
         {
             var temp = selectedCard.Source.ToString().Substring(6);
@@ -282,7 +276,7 @@ public partial class Game : ContentPage
             if (!selectedCard.RotateTo(360, 750, Easing.SinInOut).IsCanceled)
             {
 
-                _ = selectedCard.TranslateTo(300 -P*53,- 250, 100);
+                _ = selectedCard.TranslateTo(300 - P * 53, -250, 100);
 
                 int I = -1;
 
@@ -308,9 +302,7 @@ public partial class Game : ContentPage
     private static async void Bot3CardAnimation(ImageButton sender)
     {
         List<int> x = new List<int>(new int[] { -323, -285, -230, -180, -135, -60 });
-        var centerLayout = new StackLayout();
         var botCardButton = sender;
-        var myImageButtonThrowOnFirst = sender;
 
         await Task.Delay(800);
 
@@ -327,9 +319,7 @@ public partial class Game : ContentPage
     private static async void Bot2CardAnimation(ImageButton sender)
     {
         List<int> x = new List<int>(new int[] { -323, -285, -230, -180, -155, - 65});
-        var centerLayout = new StackLayout();
         var botCardButton = sender;
-        var myImageButtonThrowOnFirst = sender;
 
         await Task.Delay(800);
 
@@ -346,9 +336,7 @@ public partial class Game : ContentPage
     private static async void Bot1CardAnimation(ImageButton sender)
     {
         List<int> x = new List<int>(new int[] { -323, -275, -230, -180, -155, -65 });
-        var centerLayout = new StackLayout();
         var botCardButton = sender;
-        var myImageButtonThrowOnFirst = sender;
 
         await Task.Delay(800);
 
@@ -378,7 +366,6 @@ public partial class Game : ContentPage
         parent2.Children.Add(newImageButton);
 
         _ = newImageButton.TranslateTo(-500, 0,100);
-        // parent = layout;
         ImageButton.Clicked += OnImageButton_Clicked;
         parent2.Children.RemoveAt(2);
         ImageButton.Source = ImageSource.FromFile(Globals.cards[index].Image);
@@ -392,7 +379,6 @@ public partial class Game : ContentPage
     private void Bot_Draw0()
     {
         FlexLayout parent = BotLayout0;
-        FlexLayout parent2 = PlayerLayout;
         ImageButton newImageButton = new ImageButton();
         newImageButton.Source = ImageSource.FromFile("cardbot.png");
         newImageButton.WidthRequest = 100;
@@ -405,7 +391,6 @@ public partial class Game : ContentPage
     private void Bot_Draw1()
     {
         FlexLayout parent = BotLayout1;
-        FlexLayout parent2 = PlayerLayout;
         ImageButton newImageButton = new ImageButton();
         newImageButton.Source = ImageSource.FromFile("cardbot.png");
         newImageButton.WidthRequest = 100;
@@ -418,7 +403,6 @@ public partial class Game : ContentPage
     private void Bot_Draw2()
     {
         FlexLayout parent = BotLayout2;
-        FlexLayout parent2 = PlayerLayout;
         ImageButton newImageButton = new ImageButton();
         newImageButton.Source = ImageSource.FromFile("cardbot.png");
         newImageButton.WidthRequest = 100;
@@ -428,9 +412,3 @@ public partial class Game : ContentPage
         Globals.BotDecks[2].Add(new Card { Name = Globals.cards[index].Name, Color = Globals.cards[index].Color, Value = Globals.cards[index].Value, Image = Globals.cards[index].Image });
     }
 }
-
-/* 
-   1. Funkcionalnost karte add2(draw2), stop i swap(promjeni smjer) I PROVJERA ZA KRAJ IGRE ----> neee
-   2. Opcionalno: dodat karte da bude veci gas ----------> mozdaaaaaa
-   3. Animacije su "ODLICNE" -> ne treba fiksat ==== slazem se
-*/
