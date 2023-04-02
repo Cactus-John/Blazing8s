@@ -3,50 +3,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:converters="clr-namespace:Blazing8s.Converters;assembly=Blazing8s" 
              x:Class="Blazing8s.Game" Title="Game" BackgroundImageSource="blacktable.jpg">
-    <Grid>
-        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="120" />
-        </Grid.RowDefinitions>
-        
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="150" />
-        </Grid.ColumnDefinitions>
-        
-        <StackLayout x:Name ="layout" Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand">
-<!--      <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" />
-          <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" />
-          <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" />
-          <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" />
-          <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" />
-          <ImageButton Aspect="Center" x:Name="" BorderColor="White" Clicked="OnImageButton_Clicked" /> -->
-        </StackLayout>
-        
-        <StackLayout x:Name ="layout2" Orientation="Horizontal" VerticalOptions="CenterAndExpand">
-            <ImageButton Aspect="Center" x:Name="botImageButton1" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-            <ImageButton Aspect="Center" x:Name="botImageButton2" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-            <ImageButton Aspect="Center" x:Name="botImageButton3" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-            <ImageButton Aspect="Center" x:Name="botImageButton4" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-            <ImageButton Aspect="Center" x:Name="botImageButton5" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-            <ImageButton Aspect="Center" x:Name="botImageButton6" Source="cardbot.png" BorderColor="White" TranslationX="600" TranslationY="-300" BorderWidth="5" />
-        </StackLayout>
 
-        <FlexLayout x:Name="layout3" AlignContent="Center" AlignItems="Center" Direction="Column" 
-                    Position="Absolute" Wrap="Wrap" AlignSelf="Start" WidthRequest="350" HeightRequest="350">
+    <Grid Padding="10" Margin="10" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <FlexLayout Padding="10" x:Name="BotLayout0" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0">
+            <Image  HeightRequest="200" WidthRequest=" 100"></Image>
         </FlexLayout>
-        
-        <AbsoluteLayout>
-            <ImageButton Aspect="Center" x:Name="myImageButtonThrowOnFirst" BorderColor="red" 
-                         BorderWidth="5" CornerRadius="10" AbsoluteLayout.LayoutBounds="0.5,0.5,300,200" 
-                         AbsoluteLayout.LayoutFlags="PositionProportional" />
-        </AbsoluteLayout>
-        <Button BackgroundColor="Red" x:Name="DrawButton" WidthRequest="150" HeightRequest="150" TranslationX="-300" TranslationY="-50" Text="Draw" Clicked="OnDrawButton_Clicked" />
-        <StackLayout VerticalOptions="End">
-            <Label x:Name="winnerLabel" TextColor="Red" FontSize="42" HorizontalOptions="Center" />
+        <FlexLayout x:Name="BotLayout1" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="0" Rotation="-90">
+            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
+            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
+        </FlexLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Orientation="Horizontal" Padding="10" Grid.Row="1" Grid.Column="1">
+            <Image BackgroundColor="Beige" HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
+            <Image BackgroundColor="Beige" HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
         </StackLayout>
-        
+        <FlexLayout x:Name="BotLayout2" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="3" Rotation="-90" >
+            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
+            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
+        </FlexLayout>
+        <FlexLayout x:Name="PlayerLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
+            <Image HeightRequest="200" WidthRequest=" 100"></Image>
+        </FlexLayout>
+
     </Grid>
     
 </ContentPage>
