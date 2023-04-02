@@ -4,36 +4,52 @@
              xmlns:converters="clr-namespace:Blazing8s.Converters;assembly=Blazing8s" 
              x:Class="Blazing8s.Game" Title="Game" BackgroundImageSource="blacktable.jpg">
 
-    <Grid Padding="10" Margin="10" >
+    <Grid Padding="10" Margin="10" RowSpacing="2" x:Name = "Grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="1*" x:Name = "Column"></ColumnDefinition>
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*" x:Name = "Row"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+
         <FlexLayout Padding="10" x:Name="BotLayout0" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="0" Grid.Column="0">
-            <Image  HeightRequest="200" WidthRequest=" 100"></Image>
-        </FlexLayout>
-        <FlexLayout x:Name="BotLayout1" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="0" Rotation="-90">
-            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-        </FlexLayout>
-        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Orientation="Horizontal" Padding="10" Grid.Row="1" Grid.Column="1">
-            <Image BackgroundColor="Beige" HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-            <Image BackgroundColor="Beige" HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-        </StackLayout>
-        <FlexLayout x:Name="BotLayout2" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="3" Rotation="-90" >
-            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-            <Image  HeightRequest="200" WidthRequest=" 100" Margin="10"></Image>
-        </FlexLayout>
-        <FlexLayout x:Name="PlayerLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
-            <Image HeightRequest="200" WidthRequest=" 100"></Image>
+            <ImageButton AnchorX="338" AnchorY="-343" 
+                         HeightRequest="150" WidthRequest="100" 
+                         Margin="10" >
+            </ImageButton>
         </FlexLayout>
 
+        <FlexLayout x:Name="BotLayout1" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="0" Rotation="-90">
+            <ImageButton AnchorX="338" AnchorY="-343" 
+                         HeightRequest="150" WidthRequest="100" 
+                         Margin="10">
+            </ImageButton>
+        </FlexLayout>
+
+        <StackLayout x:Name="CenterLayout" AnchorX="500" AnchorY="-250" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Orientation="Horizontal" Padding="10" Grid.Row="1" Grid.Column="1">
+
+            <ImageButton x:Name="draw" AnchorX="100" AnchorY="-100" 
+                         BackgroundColor="Beige" 
+                         HeightRequest="150" WidthRequest="100" 
+                         Margin="10" Clicked="OnDrawButton_Clicked">
+            </ImageButton>
+
+            <Image x:Name="myImageButtonThrowOnFirst" AnchorX="338" AnchorY="-343" HeightRequest="150" WidthRequest="100" Margin="10"></Image>
+        </StackLayout>
+
+        <FlexLayout x:Name="BotLayout2" Padding="10" Direction="Row" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" Wrap="NoWrap" Position="Absolute" FlexLayout.Basis="100%" Grid.Row="1" Grid.Column="3" Rotation="-90" >
+            <ImageButton AnchorX="338" AnchorY="-343"
+                         HeightRequest="150" WidthRequest="100" 
+                         Margin="10">
+            </ImageButton>
+        </FlexLayout>
+
+        <FlexLayout x:Name="PlayerLayout" HorizontalOptions="CenterAndExpand" VerticalOptions="EndAndExpand" Wrap="Wrap" Position="Absolute" FlexLayout.Basis="100%" Grid.ColumnSpan="3" Grid.Row="2" Grid.Column="0">
+
+        </FlexLayout>
     </Grid>
-    
 </ContentPage>

@@ -1,5 +1,6 @@
 //using MetalPerformanceShaders;
 //using NetworkExtension;
+using Microsoft.Maui.Layouts;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -50,7 +51,6 @@ public class Globals
     public static List<List<Card>> BotDecks = new() { new List<Card>(), new List<Card>(), new List<Card>() };
     public static ImageButton card1 = new();
     public static bool Black = false;
-
 }
 
 public partial class Game : ContentPage
@@ -68,7 +68,7 @@ public partial class Game : ContentPage
             for (int i = 0; i < 6; i++)
             {
                 FlexLayout parent = new FlexLayout();
-                if(j == 0)
+                if (j == 0)
                     parent = BotLayout0;
                 if (j == 1)
                     parent = BotLayout1;
@@ -101,23 +101,23 @@ public partial class Game : ContentPage
         }
 
         int temp = random.Next(Globals.cards.Count - 3);
-        //myImageButtonThrowOnFirst.Source = ImageSource.FromFile(Globals.cards[temp].Image);
+        ImageButton myImageButtonThrowOnFirst = new ImageButton();
+        myImageButtonThrowOnFirst.Source = ImageSource.FromFile(Globals.cards[temp].Image);
         Globals.Value = Globals.cards[temp].Value;
         Globals.Color = Globals.cards[temp].Color;
 
         var stackLayout = new StackLayout();
     }
 
-    private bool CheckIsLegal(Card Card)
+    private bool CheckIsLegal(string temp)
     {
-        string temp = Card.Name;
-        if (temp[1] + "" == "s" || temp[1] + "" == "a")
+        if (temp[0] + "" == "s" || temp[0] + "" == "a")
         {
             Globals.Black = true;
             return true;
         }
 
-        if (temp[1] + "" == "s" || temp[temp.Length - 5] - '0' == Globals.Value || temp[1] == Globals.Color[0] || temp[1] + "" == "a")
+        else if (temp[0] + "" == "s" || temp[temp.Length - 5] - '0' == Globals.Value || temp[0] == Globals.Color[0] || temp[0] + "" == "a" || Globals.Black)
         {
             Globals.Black = false;
             return true;
@@ -130,90 +130,166 @@ public partial class Game : ContentPage
     {
         var selectedCard = (ImageButton)sender;
         bool Legal;
-        var temp = selectedCard.Source.ToString().Substring(5);
-        Legal = CheckIsLegal(new Card { Name = temp, Color = "Card", Value = 1, Image = "Card" });
+        var temp = selectedCard.Source.ToString().Substring(6);
+        Legal = CheckIsLegal(temp);
 
         if (Legal)
         {
-            if (!Globals.Black)
+            Globals.Value = temp[temp.Length - 5] - '0';
+            Globals.Color = temp + "";
+
+            CardAnimation(selectedCard);
+
+            for (int j = 0; j < 3; j++)
             {
-                Globals.Value = temp[temp.Length - 4] - '0';
-                Globals.Color = temp[1] + "";
-            }
+                FlexLayout parent = new FlexLayout();
+                if (j == 2)
+                    parent = BotLayout0;
+                if (j == 0)
+                    parent = BotLayout1;
+                if (j == 1)
+                    parent = BotLayout2;
 
-            if (selectedCard.IsPressed == true)
-            {
-                selectedCard.WidthRequest = 100;
-                selectedCard.HeightRequest = 150;
-                //FlexLayout parent;
-                //parent = layout3;
-
-               // _= selectedCard.TranslateTo(-parent.WidthRequest, -parent.HeightRequest);
-                //parent.Children.Add(selectedCard);
-              //  layout3.WidthRequest = -parent.WidthRequest;
-               // layout3.HeightRequest = -parent.HeightRequest;
-                selectedCard.IsEnabled = false;
-                await Task.Delay(555);
-              //  if (!selectedCard.IsEnabled)
-            //       parent.Children.Remove(selectedCard);
-
-              //  myImageButtonThrowOnFirst = selectedCard;
-            }
-
-            await Task.Delay(750);
-           // StackLayout Botparent = layout2;
-            //foreach (var card in Globals.BotCards)// rucni for sa i lolo
-            for(int i = 0; i < Globals.BotCards.Count; i++)
-            {
-          
-                string Temp = Globals.BotCards[i].Image;
-                if (Temp[1] + "" == "s" || Temp[1] + "" == "a")
+                for (int i = 0; i < Globals.BotDecks[j].Count; i++)
                 {
-                    Globals.Black = true;
+                    string Temp = Globals.BotDecks[j][i].Image;
 
-                  //  Botparent.Children.RemoveAt(0);
-                    return;
+                    if (CheckIsLegal(Globals.BotDecks[j][i].Image))
+                    {
+                        //Botparent.Children.RemoveAt(0);   
+                        Globals.Value = Temp[Temp.Length - 5] - '0';
+                        Globals.Color = Temp + "";
+                        Image MyImageButtonThrowOnFirst = myImageButtonThrowOnFirst;
+
+                        parent.Children.RemoveAt(0);
+                        ImageButton newImageButton = new();
+                        newImageButton.Source = ImageSource.FromFile(Globals.BotDecks[j][i].Image);
+                        newImageButton.WidthRequest = 100;
+                        newImageButton.HeightRequest = 150;
+                        //newImageButton.AnchorX = 338;
+                        //newImageButton.AnchorY = -343;
+                        newImageButton.Margin = 3;
+                        parent.Add(newImageButton);
+                        BotCardAnimation(newImageButton);
+                        await Task.Delay(2100);
+
+                        MyImageButtonThrowOnFirst.BackgroundColor = new Color(255, 255, 255);
+                        myImageButtonThrowOnFirst.Source = ImageSource.FromFile(Globals.BotDecks[j][i].Image);
+                        Globals.BotDecks[j].RemoveAt(i);
+                        break;
+
+                    }
+                    await Task.Delay(2100);
                 }
 
-                if (Temp[0] + "" == "s" || Temp[Temp.Length - 5] - '0' == Globals.Value || Temp[0] == Globals.Color[0] || Temp[0] + "" == "a")
-                {
-                    Globals.Black = false;
-                    Globals.Value = Temp[temp.Length - 4] - '0';
-                    Globals.Color = Temp[1] + "";
-                  //  Botparent.Children.RemoveAt(0);
-                    return;
-                }
-                Bot_Draw();
-
-                await Task.Delay(750);
+                //Bot_Draw();
+                await Task.Delay(1100);
             }
         }
     }
 
+    private async void CardAnimation(ImageButton selectedCard)
+    {
+
+        var centerLayout = new StackLayout();
+        FlexLayout parent = PlayerLayout;
+
+        var imagePosition = new Point(centerLayout.X + myImageButtonThrowOnFirst.AnchorX, centerLayout.Y + myImageButtonThrowOnFirst.AnchorY);
+
+
+        if (selectedCard.IsPressed == true)
+        {
+
+            _ = selectedCard.RotateTo(360, 750, Easing.SinInOut);
+
+            myImageButtonThrowOnFirst.AnchorX += -40;
+
+            if (!selectedCard.RotateTo(360, 750, Easing.SinInOut).IsCanceled)
+            {
+
+                _ = selectedCard.TranslateTo(imagePosition.X, imagePosition.Y, 100);
+
+                int I = -1;
+
+                for (int i = 0; i < Globals.PlayerCards.Count; i++)
+                {
+                    var TEMP = selectedCard.Source.ToString().Substring(6);
+                    if (Globals.PlayerCards[i].Image == TEMP)
+                    {
+                        I = i;
+                        break;
+                    }
+                }
+
+                await Task.Delay(1200);
+                myImageButtonThrowOnFirst.Source = selectedCard.Source;
+
+                parent.Children.RemoveAt(I);
+                Globals.PlayerCards.RemoveAt(I);
+
+            }
+        }
+    }
+
+    private static async void BotCardAnimation(ImageButton sender)
+    {
+        var centerLayout = new StackLayout();
+
+        var botCardButton = sender;
+
+        var imagePosition = new Point(centerLayout.X + botCardButton.AnchorX, centerLayout.Y + botCardButton.AnchorY);
+
+        await Task.Delay(1100);
+
+        if(botCardButton.IsEnabled) { _ = botCardButton.RotateTo(365, 750, Easing.BounceIn); }
+        
+        if(!botCardButton.RotateTo(365, 750, Easing.BounceIn).IsCanceled) 
+        { 
+            _ = botCardButton.TranslateTo(imagePosition.X, imagePosition.Y, 100); 
+        }
+
+        await Task.Delay(1100);
+    }
+
     private void OnDrawButton_Clicked(object sender, EventArgs e)
     {
-        FlexLayout parent;
+        FlexLayout parent = PlayerLayout;
+        StackLayout parent2 = CenterLayout;
+
         ImageButton newImageButton = new ImageButton();
+        ImageButton ImageButton = new ImageButton();
         int index = random.Next(0, Globals.CardCount);
         newImageButton.Source = ImageSource.FromFile(Globals.cards[index].Image);
         newImageButton.WidthRequest = 100;
         newImageButton.HeightRequest = 150;
-        newImageButton.Clicked += OnImageButton_Clicked;
-      /// parent = layout;
-       // parent.Children.Add(newImageButton);
+        parent2.Children.Add(newImageButton);
+
+        _ = newImageButton.TranslateTo(-500, 0,100);
+        // parent = layout;
+        ImageButton.Clicked += OnImageButton_Clicked;
+        parent2.Children.RemoveAt(2);
+        ImageButton.Source = ImageSource.FromFile(Globals.cards[index].Image);
+        ImageButton.WidthRequest = 100;
+        ImageButton.HeightRequest = 150;
+
+        parent.Children.Add(ImageButton);
         Globals.PlayerCards.Add(new Card { Name = Globals.cards[index].Name, Color = Globals.cards[index].Color, Value = Globals.cards[index].Value, Image = Globals.cards[index].Image });
     }
 
     private void Bot_Draw()
     {
-        StackLayout parent;
+        StackLayout parent = CenterLayout;
+        FlexLayout parent2 = PlayerLayout;
         ImageButton newImageButton = new ImageButton();
         newImageButton.Source = ImageSource.FromFile("cardbot.png");
         newImageButton.WidthRequest = 100;
         newImageButton.HeightRequest = 150;
+
         newImageButton.Clicked += OnImageButton_Clicked;
-      //  parent = layout2;
-      //  parent.Children.Add(newImageButton);
+        // newImageButton. = draw.X;
+        //  parent = layout2;
+        parent.Children.Add(newImageButton);
+        //newImageButton.TranslateTo(-500, 0);
         int index = random.Next(0, Globals.CardCount);
         Globals.BotCards.Add(new Card { Name = Globals.cards[index].Name, Color = Globals.cards[index].Color, Value = Globals.cards[index].Value, Image = Globals.cards[index].Image });
     }
